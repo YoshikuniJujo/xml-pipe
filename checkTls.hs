@@ -44,7 +44,7 @@ main = do
 		return ()
 
 xmlPipe1 :: Monad m => Pipe XmlEvent XmlNode m ()
-xmlPipe1 = xmlBegin >>= flip xmlNodeUntil isProceed
+xmlPipe1 = xmlBegin >>= xmlNodeUntil isProceed
 
 xmlPipe :: Monad m => Pipe XmlEvent XmlNode m ()
 xmlPipe = do

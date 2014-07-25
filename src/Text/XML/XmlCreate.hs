@@ -37,15 +37,14 @@ xmlBegin = do
 		Nothing -> return []
 		_ -> xmlBegin
 
-xmlNodeUntil :: Monad m =>
-	[(BS.ByteString, BS.ByteString)] -> (XmlNode -> Bool) ->
-		Pipe XmlEvent XmlNode m ()
-xmlNodeUntil nss p = do
+xmlNodeUntil :: Monad m => (XmlNode -> Bool) ->
+	[(BS.ByteString, BS.ByteString)] -> Pipe XmlEvent XmlNode m ()
+xmlNodeUntil p nss = do
 	mnd <- xmlNd nss
 	case mnd of
 		Right nd -> do
 			yield nd
-			unless (p nd) $ xmlNodeUntil nss p
+			unless (p nd) $ xmlNodeUntil p nss
 		Left (XEXmlDecl _) -> return ()
 		_ -> return ()
 
