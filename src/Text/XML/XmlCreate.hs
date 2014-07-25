@@ -12,14 +12,13 @@ import qualified Data.ByteString as BS
 
 import Text.XML.XmlEvent
 
-type NameSpace = [(BS.ByteString, BS.ByteString)]
 type QName = ((BS.ByteString, Maybe BS.ByteString), BS.ByteString)
 
 data XmlNode
 	= XmlDecl (Int, Int)
-	| XmlStart QName NameSpace [(QName, BS.ByteString)]
+	| XmlStart QName [Xmlns] [(QName, BS.ByteString)]
 --	| XmlEnd QName
-	| XmlNode QName NameSpace [(QName, BS.ByteString)] [XmlNode]
+	| XmlNode QName [Xmlns] [(QName, BS.ByteString)] [XmlNode]
 	| XmlCharData BS.ByteString
 	deriving Show
 
