@@ -37,7 +37,7 @@ eventToS (XEEmptyElemTag qn nss atts) = BS.concat [
 	"<", qNameToS qn,
 	BS.concat $ map nsToS nss,
 	BS.concat $ map attToS atts, "/>" ]
-eventToS (XECharData cd) = cd
+eventToS (XECharData cd) = quote cd
 
 qNameToS :: (BS.ByteString, BS.ByteString) -> BS.ByteString
 qNameToS ("", n) = n
@@ -48,4 +48,15 @@ nsToS ("", s) = BS.concat [" xmlns='", s, "'"]
 nsToS (ns, s) = BS.concat [" xmlns:", ns, "='", s, "'"]
 
 attToS :: ((BS.ByteString, BS.ByteString), BS.ByteString) -> BS.ByteString
-attToS (qn, v) = BS.concat [" ", qNameToS qn, "='", v, "'"]
+attToS (qn, v) = BS.concat [" ", qNameToS qn, "='", quote v, "'"]
+
+quote :: BS.ByteString -> BS.ByteString
+quote bs
+	| Just (h, t) <- BSC.uncons bs = case h of
+		'&' -> "&amp;" `BS.append` quote t
+		'<' -> "&lt;" `BS.append` quote t
+		'>' -> "&gt;" `BS.append` quote t
+		'"' -> "&quot;" `BS.append` quote t
+		'\'' -> "&apos;" `BS.append` quote t
+		_ -> h `BSC.cons` quote t
+	| otherwise = ""
