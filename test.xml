@@ -1,4 +1,5 @@
 <?xml version="1.0" ?>
-<some>
-thing
+<some apos='&apos;' quot="&quot;">
+thing&amp;song
+&lt;&gt;&quot;&apos;
 </some>

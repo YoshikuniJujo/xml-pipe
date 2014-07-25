@@ -86,11 +86,21 @@ prefix :: ByteString = n:ncName				{ n }
 localPart :: ByteString = n:ncName			{ n }
 
 attValue :: ByteString
-	= '"' v:(<(`notElem` "<&\"")>)* '"'		{ pack v }
-	/ '\'' v:(<(`notElem` "<&'")>)* '\''		{ pack v }
+	= '"' v:(c:<(`notElem` "<&\"")> { c } / c:entityRef { c })* '"'
+							{ pack v }
+	/ '\'' v:(c:<(`notElem` "<&'")> { c } / c:entityRef { c })* '\''
+							{ pack v }
 
 charData :: XmlEvent
-	= '>' cds:(<(`notElem` "<&")>)*			{ XECharData $ pack cds }
+	= '>' cds:(c:<(`notElem` "<&")> { c } / c:entityRef { c })*
+							{ XECharData $ pack cds }
+
+entityRef :: Char
+	= '&' 'a' 'm' 'p' ';'				{ '&' }
+	/ '&' 'l' 't' ';'				{ '<' }
+	/ '&' 'g' 't' ';'				{ '>' }
+	/ '&' 'q' 'u' 'o' 't' ';'			{ '"' }
+	/ '&' 'a' 'p' 'o' 's' ';'			{ '\'' }
 
 xmlDecl :: XmlEvent
 	= '<' '?' 'x' 'm' 'l' vi:versionInfo _:spaces? '?' _:eof
