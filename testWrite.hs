@@ -9,8 +9,7 @@ import System.Environment
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Char8 as BSC
 
-import XmlCreate
-import XmlWrite
+import Text.XML.Pipe
 
 main :: IO ()
 main = do

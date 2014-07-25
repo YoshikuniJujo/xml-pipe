@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings, TypeFamilies, QuasiQuotes #-}
 
-module Papillon(parseXmlEvent, XmlEvent(..)) where
+module Text.XML.Papillon(parseXmlEvent, XmlEvent(..)) where
 
 import Control.Arrow
 import Data.List

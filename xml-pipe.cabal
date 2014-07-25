@@ -27,8 +27,9 @@ source-repository	this
 
 library
     hs-source-dirs:	src
-    exposed-modules:	XmlWrite, XmlCreate
-    other-modules:	XmlEvent, Lexer, Papillon
+    exposed-modules:	Text.XML.Pipe
+    other-modules:
+        Text.XML.XmlEvent, Text.XML.Lexer, Text.XML.Papillon, Text.XML.XmlCreate
     build-depends:
         base == 4.*, bytestring == 0.10.*, simple-pipe == 0.0.0.6, word8 == 0.0.4,
         papillon == 0.0.88

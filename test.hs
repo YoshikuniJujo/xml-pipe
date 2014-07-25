@@ -8,7 +8,7 @@ import System.Environment
 
 import qualified Data.ByteString as BS
 
-import XmlCreate
+import Text.XML.Pipe
 
 main :: IO ()
 main = do

@@ -1,11 +1,11 @@
-module XmlEvent (xmlEvent, XmlEvent(..)) where
+module Text.XML.XmlEvent (xmlEvent, XmlEvent(..)) where
 
 import Data.Pipe
 import Data.Word8
 import qualified Data.ByteString as BS
 
-import Lexer
-import Papillon
+import Text.XML.Lexer
+import Text.XML.Papillon
 
 xmlEvent :: Monad m => Pipe BS.ByteString (Maybe XmlEvent) m ()
 xmlEvent = sepTag =$= convert parseXmlEvent =$= filterP (maybe True notEmpty)

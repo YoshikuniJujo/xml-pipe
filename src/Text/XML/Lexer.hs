@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings, PackageImports #-}
 
-module Lexer (sepTag) where
+module Text.XML.Lexer (sepTag) where
 
 -- import "monads-tf" Control.Monad.Trans
 import Data.Pipe

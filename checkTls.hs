@@ -14,8 +14,7 @@ import "crypto-random" Crypto.Random
 
 import qualified Data.ByteString as BS
 
-import XmlCreate
-import XmlWrite
+import Text.XML.Pipe
 
 main :: IO ()
 main = do

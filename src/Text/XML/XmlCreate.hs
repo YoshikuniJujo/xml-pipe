@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module XmlCreate (
+module Text.XML.XmlCreate (
 	xmlEvent, XmlEvent(..), XmlNode(..), xmlBegin, xmlNode, xmlNodeUntil) where
 
 import Control.Applicative
@@ -9,7 +9,7 @@ import Control.Monad
 import Data.Pipe
 import qualified Data.ByteString as BS
 
-import XmlEvent
+import Text.XML.XmlEvent
 
 type NameSpace = [(BS.ByteString, BS.ByteString)]
 type QName = ((BS.ByteString, Maybe BS.ByteString), BS.ByteString)

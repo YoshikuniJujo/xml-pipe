@@ -1,13 +1,15 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module XmlWrite (toByteString) where
+module Text.XML.Pipe (
+	XmlEvent(..), xmlEvent, XmlNode(..), xmlBegin, xmlNode, xmlNodeUntil,
+	toByteString ) where
 
 import Control.Arrow
 
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Char8 as BSC
 
-import XmlCreate
+import Text.XML.XmlCreate
 
 toByteString :: [XmlNode] -> BS.ByteString
 toByteString = BS.concat . map eventToS . toEvent
