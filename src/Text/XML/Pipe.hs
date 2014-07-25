@@ -3,7 +3,7 @@
 module Text.XML.Pipe (
 	XmlEvent(..), XEQName, Xmlns, xmlEvent,
 	XmlNode(..), QName, xmlBegin, xmlNode, xmlNodeUntil,
-	toByteString ) where
+	xmlString ) where
 
 import Control.Arrow
 
@@ -12,8 +12,8 @@ import qualified Data.ByteString.Char8 as BSC
 
 import Text.XML.XmlCreate
 
-toByteString :: [XmlNode] -> BS.ByteString
-toByteString = BS.concat . map eventToS . toEvent
+xmlString :: [XmlNode] -> BS.ByteString
+xmlString = BS.concat . map eventToS . toEvent
 
 toEvent :: [XmlNode] -> [XmlEvent]
 toEvent [] = []

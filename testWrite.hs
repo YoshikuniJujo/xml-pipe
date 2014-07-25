@@ -22,7 +22,7 @@ main = do
 		=$= xmlPipe
 		=$= toList
 	case mu of
-		Just ns -> BSC.putStrLn $ toByteString ns
+		Just ns -> BSC.putStrLn $ xmlString ns
 		_ -> error "bad in main"
 
 xmlPipe :: Monad m => Pipe XmlEvent XmlNode m ()
