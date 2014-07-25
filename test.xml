@@ -2,4 +2,6 @@
 <some apos='&apos;' quot="&quot;">
 thing&amp;song
 &lt;&gt;&quot;&apos;
+&#x00C0;
+&#x0063;
 </some>

@@ -7,6 +7,7 @@ import Data.List
 import Data.Char
 import Data.ByteString.Char8 (ByteString, pack)
 import Text.Papillon
+import Numeric
 
 import qualified Data.ByteString.Char8 as BSC
 
@@ -45,6 +46,9 @@ isNSAtt _ = False
 
 parseXmlEvent :: ByteString -> Maybe XmlEvent
 parseXmlEvent = either (const Nothing) (Just . fst) . runError . xmlEvent . parse
+
+fromHex :: String -> Char
+fromHex = chr . fst . head . readHex
 
 [papillon|
 
@@ -86,14 +90,19 @@ prefix :: ByteString = n:ncName				{ n }
 localPart :: ByteString = n:ncName			{ n }
 
 attValue :: ByteString
-	= '"' v:(c:<(`notElem` "<&\"")> { c } / c:entityRef { c })* '"'
+	= '"' v:(c:<(`notElem` "<&\"")> { c } / c:charEntRef { c })* '"'
 							{ pack v }
-	/ '\'' v:(c:<(`notElem` "<&'")> { c } / c:entityRef { c })* '\''
+	/ '\'' v:(c:<(`notElem` "<&'")> { c } / c:charEntRef { c })* '\''
 							{ pack v }
 
 charData :: XmlEvent
-	= '>' cds:(c:<(`notElem` "<&")> { c } / c:entityRef { c })*
+	= '>' cds:(c:<(`notElem` "<&")> { c } / c:charEntRef { c })*
 							{ XECharData $ pack cds }
+
+charEntRef :: Char = c:charRef { c } / c:entityRef { c }
+
+charRef :: Char = '&' '#' 'x'
+	ds:(<(`elem` "0123456789abcdefABCDEF")>)+ ';'	{ fromHex ds }
 
 entityRef :: Char
 	= '&' 'a' 'm' 'p' ';'				{ '&' }
