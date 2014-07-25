@@ -1,9 +1,15 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Text.XML.Pipe (
-	XmlEvent(..), XEQName, Xmlns, xmlEvent,
-	XmlNode(..), QName, xmlBegin, xmlNode, xmlNodeUntil,
-	xmlString ) where
+	-- * Functions
+	-- ** Decode
+	xmlEvent, xmlBegin, xmlNode, xmlNodeUntil,
+	-- ** Encode
+	xmlString,
+	-- * Types
+	XmlEvent(..), XmlNode(..),
+	-- ** Type Synonyms
+	XEQName, Xmlns, QName) where
 
 import Control.Arrow
 
