@@ -1,7 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Text.XML.XmlCreate (
-	xmlEvent, XmlEvent(..), XmlNode(..), xmlBegin, xmlNode, xmlNodeUntil) where
+	xmlEvent, XmlEvent(..), XmlNode(..), xmlBegin, xmlNode, xmlNodeUntil,
+	QName, Xmlns, XEQName) where
 
 import Control.Applicative
 import Control.Arrow

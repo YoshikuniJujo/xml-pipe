@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings, TypeFamilies, QuasiQuotes #-}
 
-module Text.XML.Papillon(parseXmlEvent, XmlEvent(..)) where
+module Text.XML.Papillon(Xmlns, XEQName, parseXmlEvent, XmlEvent(..)) where
 
 import Control.Arrow
 import Data.List
@@ -10,15 +10,14 @@ import Text.Papillon
 
 import qualified Data.ByteString.Char8 as BSC
 
+type Xmlns = (BSC.ByteString, BSC.ByteString)
+type XEQName = (BSC.ByteString, BSC.ByteString)
+
 data XmlEvent
 	= XEXmlDecl (Int, Int)
-	| XESTag (BSC.ByteString, BSC.ByteString)
-		[(BSC.ByteString, BSC.ByteString)]
-		[((BSC.ByteString, BSC.ByteString), BSC.ByteString)]
-	| XEETag (BSC.ByteString, BSC.ByteString)
-	| XEEmptyElemTag (BSC.ByteString, BSC.ByteString)
-		[(BSC.ByteString, BSC.ByteString)]
-		[((BSC.ByteString, BSC.ByteString), BSC.ByteString)]
+	| XESTag XEQName [Xmlns] [(XEQName, BSC.ByteString)]
+	| XEETag XEQName
+	| XEEmptyElemTag XEQName [Xmlns] [(XEQName, BSC.ByteString)]
 	| XECharData BSC.ByteString
 	deriving Show
 

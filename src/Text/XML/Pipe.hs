@@ -1,7 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Text.XML.Pipe (
-	XmlEvent(..), xmlEvent, XmlNode(..), xmlBegin, xmlNode, xmlNodeUntil,
+	XmlEvent(..), XEQName, Xmlns, xmlEvent,
+	XmlNode(..), QName, xmlBegin, xmlNode, xmlNodeUntil,
 	toByteString ) where
 
 import Control.Arrow
