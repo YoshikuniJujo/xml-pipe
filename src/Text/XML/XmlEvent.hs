@@ -1,8 +1,9 @@
 module Text.XML.XmlEvent (xmlEvent, XmlEvent(..), Xmlns, XEQName) where
 
 import Data.Pipe
-import Data.Word8
+import Data.Char
 import qualified Data.ByteString as BS
+import qualified Data.ByteString.Char8 as BSC
 
 import Text.XML.Lexer
 import Text.XML.Papillon
@@ -11,7 +12,7 @@ xmlEvent :: Monad m => Pipe BS.ByteString (Maybe XmlEvent) m ()
 xmlEvent = sepTag =$= convert parseXmlEvent =$= filterP (maybe True notEmpty)
 
 notEmpty :: XmlEvent -> Bool
-notEmpty (XECharData cd) = not $ BS.all isSpace cd
+notEmpty (XECharData cd) = not $ BSC.all isSpace cd
 notEmpty _ = True
 
 convert :: Monad m => (a -> b) -> Pipe a b m ()
