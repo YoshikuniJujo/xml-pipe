@@ -74,7 +74,7 @@ xmlNd nss = do
 --		Just (XEXmlDecl v) -> return . Just $ XmlDecl v
 		Just xe -> return $ Left xe
 		Nothing -> return . Left $ XECharData ""
-		_ -> error $ "bad in xmlNd: " ++ show mxe
+--		_ -> error $ "bad in xmlNd: " ++ show mxe
 --		_ -> error $ "bad: " ++ show mxe
 
 xmlNds :: Monad m => [(BS.ByteString, BS.ByteString)] -> Pipe XmlEvent a m [XmlNode]

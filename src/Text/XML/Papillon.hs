@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings, TypeFamilies, QuasiQuotes #-}
+{-# OPTIONS_GHC -fno-warn-orphans #-}
 
 module Text.XML.Papillon(Xmlns, XEQName, parseXmlEvent, XmlEvent(..)) where
 
@@ -73,8 +74,8 @@ ncNameStartChar :: Char = !':' s:nameStartChar		{ s }
 
 ncNameChar :: Char = !':' c:nameChar			{ c }
 
-name :: ByteString
-	= sc:nameStartChar cs:(c:nameChar { c })*	{ pack $ sc : cs }
+-- name :: ByteString
+--	= sc:nameStartChar cs:(c:nameChar { c })*	{ pack $ sc : cs }
 
 ncName :: ByteString
 	= sc:ncNameStartChar cs:(c:ncNameChar { c })*	{ pack $ sc : cs }
