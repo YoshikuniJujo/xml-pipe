@@ -21,7 +21,6 @@ main = do
 	h <- connectTo "localhost" (PortNumber 5222)
 	BS.hPut h begin
 	BS.hPut h startTls
-	hFlush h
 	mu <- runPipe $ handleP h
 		=$= xmlEvent
 		=$= filterJust
