@@ -1,5 +1,6 @@
 module Text.XML.XmlEvent (xmlEvent, XmlEvent(..), Xmlns, XEQName) where
 
+import Control.Monad
 import Data.Pipe
 import Data.Char
 import qualified Data.ByteString as BS
@@ -20,4 +21,4 @@ convert f = await >>= maybe (return ()) (\x -> yield (f x) >> convert f)
 
 filterP :: Monad m => (a -> Bool) -> Pipe a a m ()
 filterP p = await >>=
-	maybe (return ()) (\x -> (if p x then yield x else return ()) >> filterP p)
+	maybe (return ()) (\x -> when (p x) (yield x) >> filterP p)

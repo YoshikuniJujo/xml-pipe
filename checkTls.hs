@@ -4,7 +4,7 @@ import Control.Applicative
 import Control.Monad
 import "monads-tf" Control.Monad.Trans
 import Data.Pipe
-import Data.Pipe.List
+-- import Data.Pipe.List
 import Data.HandleLike
 import System.IO
 import Network
@@ -36,12 +36,11 @@ main = do
 	(`run` g) $ do
 		p <- open' h "localhost" ["TLS_RSA_WITH_AES_128_CBC_SHA"] [] ca
 		hlPut p begin
-		runPipe $ handleP p
+		void . runPipe $ handleP p
 			=$= xmlEvent
 			=$= filterJust
 			=$= xmlPipe
 			=$= puts
-		return ()
 
 xmlPipe1 :: Monad m => Pipe XmlEvent XmlNode m ()
 xmlPipe1 = xmlBegin >>= xmlNodeUntil isProceed
@@ -49,7 +48,7 @@ xmlPipe1 = xmlBegin >>= xmlNodeUntil isProceed
 xmlPipe :: Monad m => Pipe XmlEvent XmlNode m ()
 xmlPipe = do
 	c <- xmlBegin >>= xmlNode
-	when c $ xmlPipe
+	when c xmlPipe
 
 isProceed :: XmlNode -> Bool
 isProceed (XmlNode ((_, Just "urn:ietf:params:xml:ns:xmpp-tls"), "proceed") _ [] [])
@@ -68,8 +67,8 @@ filterJust = do
 		_ -> return ()
 
 begin, startTls :: BS.ByteString
-begin = toByteString beginX
-startTls = toByteString startTlsX
+begin = xmlString beginX
+startTls = xmlString startTlsX
 
 beginX, startTlsX :: [XmlNode]
 beginX = [

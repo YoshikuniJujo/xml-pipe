@@ -28,7 +28,7 @@ main = do
 xmlPipe :: Monad m => Pipe XmlEvent XmlNode m ()
 xmlPipe = do
 	c <- xmlBegin >>= xmlNode
-	when c $ xmlPipe
+	when c xmlPipe
 
 puts :: Show a => (Monad m, MonadIO m) => Pipe a () m ()
 puts = await >>= maybe (return ()) (\bs -> liftIO (print bs) >> puts)

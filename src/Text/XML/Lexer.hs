@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, PackageImports #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Text.XML.Lexer (sepTag) where
 
