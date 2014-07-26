@@ -16,6 +16,9 @@ synopsis:	XML parser which uses simple-pipe
 description:
     yet.
 
+extra-source-files:
+    examples/indians.hs
+
 source-repository	head
     type:	git
     location:	git://github.com/YoshikuniJujo/xml-pipe.git
@@ -34,4 +37,4 @@ library
         base == 4.*, bytestring == 0.10.*, simple-pipe == 0.0.0.6,
         papillon == 0.0.88
     ghc-options:	-Wall
-    extensions:		DoAndIfThenElse
+    extensions:		DoAndIfThenElse, PatternGuards
