@@ -26,7 +26,7 @@ toQName ::
 	[(BS.ByteString, BS.ByteString)] -> (BS.ByteString, BS.ByteString) -> QName
 toQName nss (q, n) = ((q, lookup q nss), n)
 
-xmlBegin :: Monad m => Pipe XmlEvent XmlNode m [(BS.ByteString, BS.ByteString)]
+xmlBegin :: Monad m => Pipe XmlEvent XmlNode m [Xmlns]
 xmlBegin = do
 	mxe <- await
 	case mxe of
@@ -38,7 +38,7 @@ xmlBegin = do
 		_ -> xmlBegin
 
 xmlNodeUntil :: Monad m => (XmlNode -> Bool) ->
-	[(BS.ByteString, BS.ByteString)] -> Pipe XmlEvent XmlNode m ()
+	[Xmlns] -> Pipe XmlEvent XmlNode m ()
 xmlNodeUntil p nss = do
 	mnd <- xmlNd nss
 	case mnd of
@@ -48,8 +48,7 @@ xmlNodeUntil p nss = do
 		Left (XEXmlDecl _) -> return ()
 		_ -> return ()
 
-xmlNode :: Monad m =>
-	[(BS.ByteString, BS.ByteString)] -> Pipe XmlEvent XmlNode m Bool
+xmlNode :: Monad m => [Xmlns] -> Pipe XmlEvent XmlNode m Bool
 xmlNode nss = do
 	mnd <- xmlNd nss
 	case mnd of
