@@ -70,6 +70,32 @@ description:
     > 	mx <- await
     > 	maybe (return ()) (\x -> lift (print x) >> printP) mx
     .
+    examples/starttls.hs
+    .
+    It process STARTTLS of XMPP as client.
+    The fllowings are only main part.
+    .
+    > main :: IO ()
+    > main = do
+    > 	h <- connectTo "localhost" (PortNumber 5222)
+    > 	BS.hPut h $ xmlString begin
+    > 	BS.hPut h $ xmlString startTls
+    > 	void . runPipe $ handleP h
+    > 		=$= xmlEvent
+    > 		=$= convert fromJust
+    > 		=$= (xmlBegin >>= xmlNodeUntil isProceed)
+    > 		=$= printP
+    > 	ca <- readCertificateStore ["cacert.sample_pem"]
+    > 	g <- cprgCreate <$> createEntropyPool :: IO SystemRNG
+    > 	(`run` g) $ do
+    > 		p <- open' h "localhost" ["TLS_RSA_WITH_AES_128_CBC_SHA"] [] ca
+    > 		hlPut p $ xmlString begin
+    > 		void . runPipe $ handleP p
+    > 			=$= xmlEvent
+    > 			=$= convert fromJust
+    > 			=$= (xmlBegin >>= xmlNode)
+    > 			=$= printP
+    .
 
 extra-source-files:
     examples/indians.hs
