@@ -14,6 +14,8 @@ license-file:	LICENSE
 category:	XML
 synopsis:	XML parser which uses simple-pipe
 description:
+    This package process subset of XML and is still far from perfect, now.
+    .
     Example programs
     .
     examples/indians.hs
