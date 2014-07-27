@@ -20,7 +20,7 @@ data XmlNode
 --	| XmlEnd QName
 	| XmlNode QName [Xmlns] [(QName, BS.ByteString)] [XmlNode]
 	| XmlCharData BS.ByteString
-	deriving Show
+	deriving (Eq, Show)
 
 toQName ::
 	[(BS.ByteString, BS.ByteString)] -> (BS.ByteString, BS.ByteString) -> QName
