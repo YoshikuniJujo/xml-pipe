@@ -153,10 +153,3 @@ eTag :: XmlEvent
 eof = !_
 
 |]
-
-instance Source ByteString where
-	type Token ByteString = Char
-	data Pos ByteString = NoPos
-	getToken = BSC.uncons
-	initialPos = NoPos
-	updatePos _ _ = NoPos
