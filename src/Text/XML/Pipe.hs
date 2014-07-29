@@ -26,6 +26,7 @@ toEvent [] = []
 toEvent (XmlDecl v : ns) = XEXmlDecl v : toEvent ns
 toEvent (XmlStart ((q, _), n) nss atts : ns) =
 	XESTag (q, n) nss (map (first $ first fst) atts) : toEvent ns
+toEvent (XmlEnd ((q, _), n) : ns) = XEETag (q, n) : toEvent ns
 toEvent (XmlNode ((q, _), n) nss atts ns : ns') =
 	XESTag (q, n) nss (map (first $ first fst) atts) :
 		toEvent ns ++ [XEETag (q, n)] ++ toEvent ns'
