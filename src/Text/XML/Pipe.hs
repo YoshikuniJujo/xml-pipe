@@ -3,7 +3,7 @@
 module Text.XML.Pipe (
 	-- * Functions
 	-- ** Decode
-	xmlEvent, xmlBegin, xmlNode, xmlNodeUntil,
+	xmlEvent, xmlBegin, xmlNode, xmlReborn, xmlNodeUntil,
 	-- ** Encode
 	xmlString,
 	-- * Types
@@ -12,11 +12,16 @@ module Text.XML.Pipe (
 	XEQName, Xmlns, QName) where
 
 import Control.Arrow
+import Control.Monad
+import Data.Pipe
 
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Char8 as BSC
 
 import Text.XML.XmlCreate
+
+xmlReborn :: Monad m => Pipe XmlEvent XmlNode m ()
+xmlReborn = xmlBegin >>= xmlNode >>= flip when xmlReborn
 
 xmlString :: [XmlNode] -> BS.ByteString
 xmlString = BS.concat . map eventToS . toEvent
