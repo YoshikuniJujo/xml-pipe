@@ -17,10 +17,10 @@ type QName = ((BS.ByteString, Maybe BS.ByteString), BS.ByteString)
 data XmlNode
 	= XmlDecl (Int, Int)
 	| XmlStart QName [Xmlns] [(QName, BS.ByteString)]
-	| XmlEnd QName
-	| XmlNode QName [Xmlns] [(QName, BS.ByteString)] [XmlNode]
 	| XmlCharData BS.ByteString
-	deriving (Eq, Show)
+	| XmlNode QName [Xmlns] [(QName, BS.ByteString)] [XmlNode]
+	| XmlEnd QName
+	deriving (Eq, Ord, Show, Read)
 
 toQName ::
 	[(BS.ByteString, BS.ByteString)] -> (BS.ByteString, BS.ByteString) -> QName
