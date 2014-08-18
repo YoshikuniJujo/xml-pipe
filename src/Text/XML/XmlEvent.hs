@@ -16,9 +16,6 @@ notEmpty :: XmlEvent -> Bool
 notEmpty (XECharData cd) = not $ BSC.all isSpace cd
 notEmpty _ = True
 
-convert :: Monad m => (a -> b) -> Pipe a b m ()
-convert f = await >>= maybe (return ()) (\x -> yield (f x) >> convert f)
-
 filterP :: Monad m => (a -> Bool) -> Pipe a a m ()
 filterP p = await >>=
 	maybe (return ()) (\x -> when (p x) (yield x) >> filterP p)
