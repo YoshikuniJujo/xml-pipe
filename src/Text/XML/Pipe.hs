@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, TupleSections #-}
 
 module Text.XML.Pipe (
 	-- * Functions
@@ -9,7 +9,7 @@ module Text.XML.Pipe (
 	-- * Types
 	XmlEvent(..), XmlNode(..),
 	-- ** Type Synonyms
-	XEQName, Xmlns, QName) where
+	XEQName, Xmlns, QName, nullQ) where
 
 import Control.Arrow
 import Control.Monad
@@ -72,3 +72,6 @@ quote bs
 		'\'' -> "&apos;" `BS.append` quote t
 		_ -> h `BSC.cons` quote t
 	| otherwise = ""
+
+nullQ :: BS.ByteString -> QName
+nullQ = (("", Nothing) ,)
