@@ -54,6 +54,7 @@ xmlNode nss = do
 	case mnd of
 		Right nd -> yield nd >> xmlNode nss
 		Left (XEXmlDecl _) -> return True
+		Left (XEETag n) -> yield (XmlEnd $ toQName nss n) >> return False
 		_ -> return False
 
 xmlNd :: Monad m =>
